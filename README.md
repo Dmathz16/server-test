@@ -40,10 +40,17 @@ Used for testing server only
    cd /var/www
    git clone <repository-url>
    ```
-   * Test run flask app
+   * Setup flask app
    ```cmd
    cd <project-path>
    python3 -m venv .venv
    . .venv/bin/activate
    pip3 install -r requirements.txt
+   ```
+   * Install gunicorn (Production)
+   ```cmd
+   sudo apt install gunicorn
+   ```
+   ```cmd
+   sudo gunicorn --bind 0.0.0.0:80 app:app
    ```
