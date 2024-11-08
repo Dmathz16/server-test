@@ -18,7 +18,7 @@ Used for testing server only
    sudo systemctl enable nginx
    ```
 
-2. Flask app (nginx)
+2. Flask app
    * Install python & pip
    ```cmd
    sudo apt install python3-pip
@@ -31,4 +31,11 @@ Used for testing server only
    ```cmd
    cd /var/www
    git clone <repository-url>
+   ```
+   * Test run flask app
+   ```cmd
+   cd <project-path>
+   python3 -m venv .venv
+   . .venv/bin/activate
+   pip3 install -r -requirements.txt
    ```
