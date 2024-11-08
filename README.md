@@ -9,7 +9,15 @@ Used for testing server only
  sudo apt update
  ```
 
-1. Web Server (nginx)
+1. Change root password then use root account
+   ```cmd
+   sudo passwd root
+   ```
+   ```cmd
+   su - root
+   ```
+
+2. Web Server (nginx)
    ```cmd
    sudo apt install nginx
    ```
@@ -18,7 +26,7 @@ Used for testing server only
    sudo systemctl enable nginx
    ```
 
-2. Flask app
+3. Flask app
    * Install python, pip & virtual environment
    ```cmd
    sudo apt install python3-pip python3-venv
