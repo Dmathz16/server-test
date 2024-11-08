@@ -59,7 +59,7 @@ Used for testing server only
    . .venv/bin/activate
    pip3 install -r requirements.txt
    ```
-   * Install gunicorn (Production)
+4. Setup gunicorn (Production)
    ```cmd
    sudo apt install gunicorn
    ```
