@@ -10,13 +10,13 @@ Used for testing server only
  ```
 
 1. Web Server (nginx)
-  ```cmd
-  sudo apt install nginx
-  ```
-  ```cmd
-  sudo systemctl start nginx
-  sudo systemctl enable nginx
-  ```
+   ```cmd
+   sudo apt install nginx
+   ```
+   ```cmd
+   sudo systemctl start nginx
+   sudo systemctl enable nginx
+   ```
 
 2. Flask app (nginx)
    * Install python & pip
