@@ -9,7 +9,7 @@ Used for testing server only
  sudo apt update
  ```
 
-* Web Server (nginx)
+1. Web Server (nginx)
   ```cmd
   sudo apt install nginx
   ```
@@ -17,3 +17,18 @@ Used for testing server only
   sudo systemctl start nginx
   sudo systemctl enable nginx
   ```
+
+2. Flask app (nginx)
+   * Install python & pip
+   ```cmd
+   sudo apt install python3-pip
+   ```
+   * Install git
+   ```cmd
+   sudo apt install git
+   ```
+   * Clone app from github
+   ```cmd
+   cd /var/www
+   git clone <repository-url>
+   ```
