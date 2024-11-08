@@ -19,7 +19,7 @@ Used for testing server only
    ```
 
 2. Flask app
-   * Install python, pip & Virtual Environment
+   * Install python, pip & virtual environment
    ```cmd
    sudo apt install python3-pip python3-venv
    ```
@@ -37,5 +37,5 @@ Used for testing server only
    cd <project-path>
    python3 -m venv .venv
    . .venv/bin/activate
-   pip3 install -r -requirements.txt
+   pip3 install -r requirements.txt
    ```
