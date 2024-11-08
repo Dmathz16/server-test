@@ -19,9 +19,9 @@ Used for testing server only
    ```
 
 2. Flask app
-   * Install python & pip
+   * Install python, pip & Virtual Environment
    ```cmd
-   sudo apt install python3-pip
+   sudo apt install python3-pip python3-venv
    ```
    * Install git
    ```cmd
