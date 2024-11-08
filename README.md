@@ -54,3 +54,14 @@ Used for testing server only
    ```cmd
    sudo gunicorn --bind 0.0.0.0:80 app:app
    ```
+4. Setup domain name (nginx)
+   ```cmd
+   sudo nano /etc/nginx/sites-available/default
+   ```
+   * Update the file with this:
+   ```cmd
+   server {
+     listen 80;
+     server_name <domain_name> www.<domain_name>;
+   }
+   ```
