@@ -122,7 +122,7 @@ sudo apt update
 
    * Import sql
    ``` cmd
-   mysql -u root -p <db_name> < <path-to-.sql-file> 
+   sudo mysql -u root -p <db_name> < <path-to-.sql-file> 
    ```
 
    * Confirm database
