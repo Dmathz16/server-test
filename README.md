@@ -205,4 +205,14 @@ sudo apt update
    ``` cmd
    gunicorn --bind 0.0.0.0:5000 wsgi:app
    ```
+
+   Stop gunicorn: **ctrl + c**
+
+   * Stop virtual environment   
+   ``` cmd
+   deactivate 
+   ```
    
+7. **Set Service**
+
+   * dwadwa 
