@@ -28,31 +28,23 @@ Used for testing server only
    you can now open the site in browser using your Ip Address
 
 3. Flask app
-   * Install python, pip & virtual environment
+   * Install python, pip, virtual environment & git
    ```cmd
-   sudo apt install python3-pip python3-venv
-   ```
-   * Install git
-   ```cmd
-   sudo apt install git
+   sudo apt install python3-pip python3-venv git
    ```
    * Clone app from github
    ```cmd
    cd /var/www
    git clone <repository-url>
    ```
-   * Setup flask app
+   * Activate virtual environment and setup flask app
    ```cmd
    cd <project-path>
    python3 -m venv .venv
    . .venv/bin/activate
    pip3 install -r requirements.txt
    ```
-   * dwad
-   ``` cmd
-   
-   ```
-   * Install gunicorn (Production)
+   * Install gunicorn then bind app
    ```cmd
    pip3 install gunicorn
    ```
@@ -82,8 +74,12 @@ Used for testing server only
    ``` cmd
    sudo nginx -t
    ```
-   * Restart
+   * Restart nginx 
    ``` cmd
    sudo systemctl restart nginx
+   ```
+   * Change dir to project, activate environment then run gunicorn
+   ``` cmd
+   gunicorn --bind 127.0.0.1:5000 application:app
    ```
    You can now access the app using domain/ip address
