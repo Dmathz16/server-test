@@ -16,6 +16,7 @@ def welcome():
     data['subtitle'] = ''
     return render_template('page1/index.html', data=data)
 
+@page1.route('/'+view_name)
 @page1.route('/'+view_name+'/')
 def index():
     

@@ -11,6 +11,7 @@ page2 = Blueprint(view_name, __name__)
 
 data = {}
 
+@page2.route('/'+view_name)
 @page2.route('/'+view_name+'/')
 def index():
     
