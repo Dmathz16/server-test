@@ -13,7 +13,8 @@ data = {}
 
 @page1.route('/')
 def welcome():
-    return redirect(url_for('page1.index'))
+    data['subtitle'] = ''
+    return render_template('page1/index.html', data=data)
 
 @page1.route('/'+view_name+'/')
 def index():
