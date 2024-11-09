@@ -50,9 +50,14 @@ sudo usermod -aG server_admin rogin
 ```
 
 * Set Permissions for the Web Server to Run as "www-data"
-``` cmd
-user www-data server_admin;
-```
+   * Modify directive
+   ``` cmd
+   nano /etc/nginx/nginx.conf
+   ```
+   * Update to
+   ``` cmd
+   user www-data server_admin;
+   ```
 
 * Verify Group Membership
 ``` cmd
