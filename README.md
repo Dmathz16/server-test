@@ -120,3 +120,7 @@ Used for testing server only
    sudo ufw allow 443/tcp      # Allow HTTPS
    sudo ufw allow 22/tcp       # Allow SSH
    ```
+   Check status
+   ``` cmd
+   sudo ufw status
+   ```
