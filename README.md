@@ -100,3 +100,26 @@ sudo apt update
    ``` cmd
    su - rogin
    ```
+   
+3. Flask app
+
+   **Requirements**
+   
+   ``` cmd
+   sudo apt install python3-pip python3-venv git
+   ```
+
+   * Clone app from github
+   ``` cmd
+   cd /var/www
+   git clone <repository-url> <new-project-foldername>
+   ```
+
+   * Activate virtual environment and setup flask app
+   ``` cmd
+   cd <project-path>
+   python3 -m venv .venv
+   . .venv/bin/activate
+   pip3 install -r requirements.txt
+
+   ```
