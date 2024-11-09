@@ -64,14 +64,14 @@ sudo apt update
       user www-data server_admin;
       ```
    
-   * Verify Group Membership
-   ``` cmd
-   groups rogin
-   ```
-   
    * Add "rogin" to sudo group
    ``` cmd
    sudo usermod -aG sudo rogin
+   ```
+   
+   * Verify Group Membership
+   ``` cmd
+   groups rogin
    ```
 
    **Remove "ubuntu" user**
