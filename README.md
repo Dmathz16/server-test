@@ -6,8 +6,69 @@ Used for testing server only
 ## After running new instance in AWS EC2
 
 ```cmd
- sudo apt update
- ```
+sudo apt update
+```
+
+* Create web server (nginx)
+```cmd
+sudo useradd -m -g server_admin -s /bin/bash rogin
+```
+```cmd
+sudo systemctl start nginx
+sudo systemctl enable nginx
+```
+
+* Create user group named "server_admin" 
+```cmd
+sudo groupadd server_admin
+```
+
+* Create user named "rogin" then assign to "server_admin" 
+```cmd
+sudo useradd -m -g server_admin -s /bin/bash rogin
+```
+
+* Create user "rogin" password 
+```cmd
+sudo passwd <user>
+```
+
+* Set "server_admin" permissions for web server files.
+```cmd
+sudo chown -R :server_admin /var/www
+sudo chmod -R 775 /var/www
+```
+
+* Add "rogin" to the "server_admin" group, if not done yet.
+``` cmd
+sudo usermod -aG server_admin rogin
+```
+
+* Set Permissions for the Web Server to Run as "www-data"
+``` cmd
+user www-data server_admin;
+```
+
+* Verify Group Membership
+``` cmd
+groups rogin
+```
+
+* Add "rogin" to sudo group
+``` cmd
+sudo usermod -aG sudo rogin
+```
+
+* Restart Web Server
+``` cmd
+sudo systemctl restart nginx
+```
+
+* Login as "rogin" directly
+``` cmd
+su - rogin
+```
+
 
 1. Change root password then use root account
    ```cmd
