@@ -170,3 +170,39 @@ sudo apt update
    flask --app application run --host=0.0.0.0
    ```
    You can now open it on browser with **IPAddress:5000**, if you open its port in AWS.
+   
+6. **Run with wsgi and gunicorn**
+
+   Stop flask app if running: **ctrl + c**
+
+   * While virtual environment is active run this
+   ``` cmd
+   pip3 install gunicorn
+   ```
+
+   * Run gunicorn
+   ``` cmd
+   gunicorn --bind 0.0.0.0:5000 application:app
+   ```
+   Check app in browser with its port if working
+
+   Stop gunicorn: **ctrl + c**
+
+   * Create **wsgi.py** inside project and outside application folder
+   ``` cmd
+   sudo nano /var/www/<project-name>/wsgi.py
+   ```
+
+   * Paste this inside wsgi.py then save
+   ``` cmd
+   from application import app
+
+   if __init__ == '__main__':
+      app.run()
+   ```
+
+   * Run gunicorn
+   ``` cmd
+   gunicorn --bind 0.0.0.0:5000 wsgi:app
+   ```
+   
