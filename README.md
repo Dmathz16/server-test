@@ -113,3 +113,10 @@ Used for testing server only
    sudo systemctl enable <service-name>
    ```
    You can now access the app using domain/ip address without manually running gunicorn
+6. Enable firewall (production)
+   ``` cmd
+   sudo ufw enable
+   sudo ufw allow 80/tcp       # Allow HTTP
+   sudo ufw allow 443/tcp      # Allow HTTPS
+   sudo ufw allow 22/tcp       # Allow SSH
+   ```
