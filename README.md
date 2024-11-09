@@ -19,11 +19,15 @@ sudo apt update
    ```
 
 2. **Manage users**
-   * Change root password
+   
+   **Change root password**
+
    ```cmd
    sudo passwd root
    ```
-   
+
+   **Create new user**
+
    * Create user group named "server_admin" 
    ```cmd
    sudo groupadd server_admin
