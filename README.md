@@ -27,6 +27,13 @@ Used for testing server only
    ```
    you can now open the site in browser using your Ip Address
 
+3. MySQL Server
+   ``` cmd
+   sudo apt-get install mysql-server
+   sudo mysql_secure_installation
+   sudo systemctl status mysql
+   ```
+
 3. Flask app
    * Install python, pip, virtual environment & git
    ```cmd
@@ -51,6 +58,7 @@ Used for testing server only
    ```cmd
    gunicorn --bind 127.0.0.1:5000 application:app
    ```
+   
 4. Setup nginx configuration
    Stop gunicorn then:
    ```cmd
