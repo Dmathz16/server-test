@@ -16,7 +16,7 @@ sudo passwd root
 
 * Create web server (nginx)
 ```cmd
-sudo useradd -m -g server_admin -s /bin/bash rogin
+sudo apt install nginx
 ```
 ```cmd
 sudo systemctl start nginx
