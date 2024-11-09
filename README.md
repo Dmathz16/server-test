@@ -133,9 +133,17 @@ sudo apt update
    SELECT * FROM <db_table_name>;
    EXIT;
    ```
-
    
-4. **Flask app**
+   **Create MySQL user and grant permission for code connection**
+   ``` cmd
+   mysql -u root -p
+   CREATE USER '<username>'@'localhost' IDENTIFIED BY '<password>';
+   GRANT ALL PRIVILEGES ON <db_name>.* TO '<username>'@'localhost';
+   FLUSH PRIVILEGES;
+   EXIT;
+   ```
+   
+5. **Flask app**
 
    **Requirements**
    
