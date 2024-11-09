@@ -69,13 +69,30 @@ sudo apt update
    ``` cmd
    sudo usermod -aG sudo rogin
    ```
+
+   **Remove "ubuntu" user**
    
-   * Restart Web Server
+   * Check running processes
+   ``` cmd
+   ps -u ubuntu
+   ```
+
+   * Terminate "ubuntu" Active Session
+   ``` cmd
+   sudo kill <PID>
+   ```
+
+   * Remove the user
+   ``` cmd
+   sudo userdel -r ubuntu
+   ```
+
+   **Restart Web Server**
    ``` cmd
    sudo systemctl restart nginx
    ```
   
-  * Login as "rogin" directly
-  ``` cmd
-  su - rogin
-  ```
+   **Login as "rogin" directly**
+   ``` cmd
+   su - rogin
+   ```
