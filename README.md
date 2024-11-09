@@ -25,18 +25,7 @@ Used for testing server only
    sudo systemctl start nginx
    sudo systemctl enable nginx
    ```
-   
-2. Setup domain name (nginx)
-   ```cmd
-   sudo nano /etc/nginx/sites-available/default
-   ```
-   * Update the file with this:
-   ```cmd
-   server {
-     listen 80;
-     server_name <domain_name> www.<domain_name>;
-   }
-   ```
+   you can now open the site in browser using your Ip Address
 
 3. Flask app
    * Install python, pip & virtual environment
@@ -59,10 +48,42 @@ Used for testing server only
    . .venv/bin/activate
    pip3 install -r requirements.txt
    ```
-4. Setup gunicorn (Production)
+   * dwad
+   ``` cmd
+   
+   ```
+   * Install gunicorn (Production)
    ```cmd
-   sudo apt install gunicorn
+   pip3 install gunicorn
    ```
    ```cmd
-   sudo gunicorn --bind 0.0.0.0:80 app:app
+   gunicorn --bind 127.0.0.1:5000 application:app
    ```
+4. Setup nginx configuration
+   ```cmd
+   sudo nano /etc/nginx/sites-available/default
+   ```
+   * Update the file with this then save:
+   ```cmd
+   server {
+       listen 80;
+       server_name your_domain.com;  # Replace with your domain or server IP
+   
+       location / {
+           proxy_pass http://127.0.0.1:5000;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_set_header X-Forwarded-Proto $scheme;
+       }
+   }
+   ```
+   * Check for syntax error
+   ``` cmd
+   sudo nginx -t
+   ```
+   * Restart
+   ``` cmd
+   sudo systemctl restart nginx
+   ```
+   You can now access the app using domain/ip address
