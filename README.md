@@ -52,7 +52,7 @@ sudo usermod -aG server_admin rogin
 * Set Permissions for the Web Server to Run as "www-data"
    * Modify directive
    ``` cmd
-   nano /etc/nginx/nginx.conf
+   sudo nano /etc/nginx/nginx.conf
    ```
    * Update to
    ``` cmd
