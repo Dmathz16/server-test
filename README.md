@@ -35,7 +35,7 @@ sudo useradd -m -g server_admin -s /bin/bash rogin
 
 * Create user "rogin" password 
 ```cmd
-sudo passwd <user>
+sudo passwd rogin
 ```
 
 * Set "server_admin" permissions for web server files.
