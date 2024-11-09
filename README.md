@@ -197,7 +197,7 @@ sudo apt update
    ``` cmd
    from application import app
 
-   if __init__ == '__main__':
+   if __name__ == '__main__':
       app.run()
    ```
 
