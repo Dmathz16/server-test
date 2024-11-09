@@ -52,6 +52,7 @@ Used for testing server only
    gunicorn --bind 127.0.0.1:5000 application:app
    ```
 4. Setup nginx configuration
+   Stop gunicorn then:
    ```cmd
    sudo nano /etc/nginx/sites-available/default
    ```
@@ -83,3 +84,32 @@ Used for testing server only
    gunicorn --bind 127.0.0.1:5000 application:app
    ```
    You can now access the app using domain/ip address
+
+5. Run in production
+   Stop gunicorn then create system service:
+   ``` cmd
+   sudo nano /etc/systemd/system/<service-name>.service
+   ```
+   * Add configuration then save:
+   ``` cmd
+   [Unit]
+   Description=My app description
+   After=network.target
+   
+   [Service]
+   User=www-data
+   Group=www-data
+   WorkingDirectory=/var/www/dmathz-app
+   Environment="PATH=/var/www/dmathz-app/venv/bin"
+   ExecStart=/var/www/dmathz-app/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:5000 application:app
+   
+   [Install]
+   WantedBy=multi-user.target
+   ```
+   * Start and enable the service
+   ``` cmd
+   sudo systemctl daemon-reload
+   sudo systemctl start <service-name>
+   sudo systemctl enable <service-name>
+   ```
+   You can now access the app using domain/ip address without manually running gunicorn
