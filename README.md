@@ -100,8 +100,42 @@ sudo apt update
    ``` cmd
    su - rogin
    ```
+
+3. **MySQL Server**
+
+   ``` cmd
+   sudo apt-get install mysql-server
+   sudo mysql_secure_installation
+   sudo systemctl status mysql
+   ```
+
+   ``` cmd
+   sudo mysql -u root -p
+   ```
+
+   * Create MySQL Database
+   ``` cmd
+   CREATE DATABASE <db_name>;
+   SHOW DATABASES;
+   EXIT;
+   ```
+
+   * Import sql
+   ``` cmd
+   mysql -u root -p <db_name> < <path-to-.sql-file> 
+   ```
+
+   * Confirm database
+   ``` cmd
+   mysql -u root -p
+   SHOW DATABASES;
+   USE <db_name>;
+   SELECT * FROM <db_table_name>;
+   EXIT;
+   ```
+
    
-3. Flask app
+4. **Flask app**
 
    **Requirements**
    
