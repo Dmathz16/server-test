@@ -127,4 +127,4 @@ sudo apt update
    ``` cmd
    flask --app application run --host=0.0.0.0
    ```
-   You can now open it on browser with <IPAddress>:5000, if you open its port in AWS.
+   You can now open it on browser with **<IPAddress>:5000**, if you open its port in AWS.
