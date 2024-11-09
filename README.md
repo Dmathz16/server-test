@@ -124,3 +124,8 @@ Used for testing server only
    ``` cmd
    sudo ufw status
    ```
+   Remove
+   ``` cmd
+   sudo ufw delete allow 22/tcp
+   sudo ufw reload
+   ```
