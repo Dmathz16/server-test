@@ -9,6 +9,11 @@ Used for testing server only
 sudo apt update
 ```
 
+* Change root password
+```cmd
+sudo passwd root
+```
+
 * Create web server (nginx)
 ```cmd
 sudo useradd -m -g server_admin -s /bin/bash rogin
