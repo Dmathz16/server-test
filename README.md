@@ -27,9 +27,9 @@ sudo apt update
 2. **Set server account**
    
    2.1. Change root password
-      ```cmd
-      sudo passwd root
-      ```
+         ```cmd
+         sudo passwd root
+         ```
    
    2.2. Add new user
       ```cmd
