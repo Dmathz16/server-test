@@ -5,214 +5,35 @@ Used for testing server only
 
 ## After running new instance in AWS EC2
 
+**Connect to server using SSH in terminal**
+```cmd
+ssh -i <path_to_pem_file> ubuntu@<ipaddress>
+```
+
+**Update ubuntu software**
 ```cmd
 sudo apt update
 ```
 
-1. **Create web server (nginx)**
+1 **Install and enable web server (nginx)**
    ```cmd
-   sudo apt install nginx
+   sudo apt install nginx -y
    ```
    ```cmd
    sudo systemctl start nginx
    sudo systemctl enable nginx
    ```
 
-2. **Manage users**
+2 **Set server account**
+   2.1 Change root password
+   2.2 Add new user
+   2.3 Remove default user
    
-   **Change root password**
+3 **Set MySQL server**
 
-   ```cmd
-   sudo passwd root
-   ```
-
-   **Create new user**
-
-   * Create user group named "server_admin" 
-   ```cmd
-   sudo groupadd server_admin
-   ```
+4 **Set flask app**
+   4.1 Install app and other requirements
+   4.2 Run with gunicorn + wsgi 
    
-   * Create user named "rogin" then assign to "server_admin" 
-   ```cmd
-   sudo useradd -m -g server_admin -s /bin/bash rogin
-   ```
-   
-   * Create user "rogin" password 
-   ```cmd
-   sudo passwd rogin
-   ```
-   
-   * Set "server_admin" permissions for web server files.
-   ```cmd
-   sudo chown -R :server_admin /var/www
-   sudo chmod -R 775 /var/www
-   ```
-   
-   * Add "rogin" to the "server_admin" group, if not done yet.
-   ``` cmd
-   sudo usermod -aG server_admin rogin
-   ```
-   
-   * Set Permissions for the Web Server to Run as "www-data"
-      * Modify directive
-      ``` cmd
-      sudo nano /etc/nginx/nginx.conf
-      ```
-      * Update to
-      ``` cmd
-      user www-data server_admin;
-      ```
-   
-   * Add "rogin" to sudo group
-   ``` cmd
-   sudo usermod -aG sudo rogin
-   ```
-   
-   * Verify Group Membership
-   ``` cmd
-   groups rogin
-   ```
-
-   **Remove "ubuntu" user**
-   
-   * Check running processes
-   ``` cmd
-   ps -u ubuntu
-   ```
-
-   * Terminate "ubuntu" Active Session
-   ``` cmd
-   sudo kill <PID>
-   ```
-
-   * Remove the user
-   ``` cmd
-   sudo userdel -r ubuntu
-   ```
-
-   **Restart Web Server**
-   ``` cmd
-   sudo systemctl restart nginx
-   ```
-  
-   **Login as "rogin" directly**
-   ``` cmd
-   su - rogin
-   ```
-
-3. **MySQL Server**
-
-   ``` cmd
-   sudo apt-get install mysql-server
-   sudo mysql_secure_installation
-   sudo systemctl status mysql
-   ```
-
-   ``` cmd
-   sudo mysql -u root -p
-   ```
-
-   * Create MySQL Database
-   ``` cmd
-   CREATE DATABASE <db_name>;
-   SHOW DATABASES;
-   EXIT;
-   ```
-
-   * Import sql
-   ``` cmd
-   sudo mysql -u root -p <db_name> < <path-to-.sql-file> 
-   ```
-
-   * Confirm database
-   ``` cmd
-   mysql -u root -p
-   SHOW DATABASES;
-   USE <db_name>;
-   SELECT * FROM <db_table_name>;
-   EXIT;
-   ```
-   
-   **Create MySQL user and grant permission for code connection**
-   ``` cmd
-   mysql -u root -p
-   CREATE USER '<username>'@'localhost' IDENTIFIED BY '<password>';
-   GRANT ALL PRIVILEGES ON <db_name>.* TO '<username>'@'localhost';
-   FLUSH PRIVILEGES;
-   EXIT;
-   ```
-   
-5. **Flask app**
-
-   **Requirements**
-   
-   ``` cmd
-   sudo apt install python3-pip python3-venv git
-   ```
-
-   * Clone app from github
-   ``` cmd
-   cd /var/www
-   git clone <repository-url> <new-project-foldername>
-   ```
-
-   * Activate virtual environment and setup flask app
-   ``` cmd
-   cd <project-path>
-   python3 -m venv .venv
-   . .venv/bin/activate
-   pip3 install -r requirements.txt
-   ```
-
-   * Test run
-   ``` cmd
-   flask --app application run --host=0.0.0.0
-   ```
-   You can now open it on browser with **IPAddress:5000**, if you open its port in AWS.
-   
-6. **Run with wsgi and gunicorn**
-
-   Stop flask app if running: **ctrl + c**
-
-   * While virtual environment is active run this
-   ``` cmd
-   pip3 install gunicorn
-   ```
-
-   * Run gunicorn
-   ``` cmd
-   gunicorn --bind 0.0.0.0:5000 application:app
-   ```
-   Check app in browser with its port if working
-
-   Stop gunicorn: **ctrl + c**
-
-   * Create **wsgi.py** inside project and outside application folder
-   ``` cmd
-   sudo nano /var/www/<project-name>/wsgi.py
-   ```
-
-   * Paste this inside wsgi.py then save
-   ``` cmd
-   from application import app
-
-   if __name__ == '__main__':
-      app.run()
-   ```
-
-   * Run gunicorn
-   ``` cmd
-   gunicorn --bind 0.0.0.0:5000 wsgi:app
-   ```
-
-   Stop gunicorn: **ctrl + c**
-
-   * Stop virtual environment   
-   ``` cmd
-   deactivate 
-   ```
-   
-7. **Set Service**
-
-   * dwadwa 
+5 **Set nginx config**
+   5.1 Domain name
