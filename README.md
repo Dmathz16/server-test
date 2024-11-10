@@ -1,6 +1,7 @@
 # Server Test
 
-Used for testing server only
+For setting up production server with flask+nginx+gunicorn
+
 
 
 ## After running new instance in AWS EC2
