@@ -96,20 +96,24 @@ sudo apt update
    sudo mysql_secure_installation
    sudo systemctl status mysql
    ```
+   
    Connect to MySQL server
    ```cmd
    sudo mysql -u root -p
    ```
+   
    Create database
    ```cmd
    CREATE DATABASE <db_name>;
    SHOW DATABASES;
    EXIT;
    ```
+   
    Import existing sql
    ```cmd
    sudo mysql -u root -p <db_name> < <path_to_sql_file>
    ```
+   
    Check if data are imported
    ```cmd
    sudo mysql -u root -p
@@ -120,8 +124,41 @@ sudo apt update
    ```
 
 5. **Set flask app**
-   4.1. Install app and other requirements
-   4.2. Run with gunicorn + wsgi 
+
+   * Change directory
+   ```cmd
+   cd /var/www
+   ```
    
-6. **Set nginx config**
-   5.1. Domain name
+   * Install requirements
+   ```cmd
+   sudo apt install python3-pip python3-venv git -y
+   ```
+   
+   * Clone project from git
+   ```cmd
+   git clone <repository-url> <new-project-foldername>
+   ```
+
+   * Setup
+   ```cmd
+   cd <project-path>
+   python3 -m venv .venv
+   . .venv/bin/activate
+   pip3 install flask
+   pip3 install -r requirements.txt
+   ```
+
+   * Run app
+   ```cmd
+   python <app>.py
+   ```
+   or
+   ```cmd
+   flask --app <app> run
+   ```
+      
+7. **Run with gunicorn + wsgi**
+   
+8. **Set nginx config**
+   6.1. Domain name
