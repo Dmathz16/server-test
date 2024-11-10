@@ -24,6 +24,7 @@ sudo apt update
    sudo systemctl enable nginx
    ```
 
+
 2. **Set server account**
    
    * Change root password
@@ -88,6 +89,7 @@ sudo apt update
       ```cmd
       exit
       ```
+
    
 4. **Set MySQL server** (If needed)
    Install and setup server
@@ -123,42 +125,203 @@ sudo apt update
    EXIT;
    ```
 
+
 5. **Set flask app**
 
    * Change directory
-   ```cmd
-   cd /var/www
-   ```
+      ```cmd
+      cd /var/www
+      ```
    
    * Install requirements
-   ```cmd
-   sudo apt install python3-pip python3-venv git -y
-   ```
+      ```cmd
+      sudo apt install python3-pip python3-venv git -y
+      ```
    
    * Clone project from git
-   ```cmd
-   git clone <repository-url> <new-project-foldername>
-   ```
+      ```cmd
+      git clone <repository-url> <project-name>
+      ```
 
    * Setup
-   ```cmd
-   cd <project-path>
-   python3 -m venv .venv
-   . .venv/bin/activate
-   pip3 install flask
-   pip3 install -r requirements.txt
-   ```
+      ```cmd
+      cd <project-name>
+      python3 -m venv .venv
+      . .venv/bin/activate
+      pip3 install flask
+      pip3 install -r requirements.txt
+      ```
 
    * Run app
-   ```cmd
-   python <app>.py
-   ```
-   or
-   ```cmd
-   flask --app <app> run
-   ```
+      ```cmd
+      python <app>.py
+      ```
+      or
+      ```cmd
+      flask --app <app> run
+      ```
+
       
 7. **Run with gunicorn + wsgi**
    
-8. **Set nginx config**
-   6.1. Domain name
+   Stop running app by pressing **ctrl + c**
+
+   * Install gunicorn
+      ```cmd
+      pip3 install gunicorn
+      ```
+
+   * Run app with gunicorn
+      ```cmd
+      gunicorn --bind 0.0.0.0:5000 <app>:app
+      ```
+
+   * Stop gunicorn by pressing **ctrl + c** then create wsgi.py inside project directory
+      ```cmd
+      sudo nano /var/www/<project-name>/wsgi.py
+      ```
+
+   * Then paste this inside wsgi.py and save
+      ```cmd
+      from <app> import app
+      
+      if __name__ == '__main__':
+      	app.run(host='0.0.0.0')
+      ```
+
+   * Run app with gunicorn + wsgi
+      ```cmd
+      gunicorn --bind 0.0.0.0:5000 wsgi:app
+      ```
+
+   * Deactivate environment if done testing
+      ```cmd
+      deactivate
+      ```
+   
+   
+8. **Run flask app in system service**
+    
+   * After deactivating python environment, create new service file
+      ```cmd
+      sudo nano /etc/systmd/system/<project-name>.service
+      ```
+
+   * Paste, update code then save this in service file
+      ```cmd
+      [Unit]
+      Description=My app description
+      After=network.target
+      
+      [Service]
+      User=<username> 
+      Group=www-data
+      WorkingDirectory=/var/www/<project-name>
+      Environment="PATH=/var/www/<project-name>/.venv/bin"
+      ExecStart=/var/www/<project-name>/.venv/bin/gunicorn --workers 3 --bind unix:application.sock -m 007 wsgi:app
+      
+      # Log output configuration
+      StandardOutput=append:/var/log/<project-name>/gunicorn_access.log
+      StandardError=append:/var/log/<project-name>/gunicorn_error.log
+      
+      [Install]
+      WantedBy=multi-user.target
+      ```
+
+   * Make directory for app logs
+      ```cmd
+      sudo mkdir -p /var/log/<project-name>
+      ```
+
+   * Set permission for that directory
+      ```cmd
+      sudo chown www-data:www-data /var/log/<project-name>
+      ```
+
+   * Start and enable new service
+      ```cmd
+      sudo systemctl daemon-reload
+      sudo systemctl start <service-name>
+      sudo systemctl enable <service-name>
+      sudo systemctl status <service-name>
+      ```
+
+   * Check app logs
+      ```cmd
+      sudo tail -f /var/log/<project-name>/gunicorn_error.log
+      ```
+
+
+9. **Set nginc config** (with Domain name)
+
+   * Check app logs
+      ```cmd
+      sudo nano /etc/nginx/sites-available/<project-name>.conf
+      ```
+
+   * Check app logs
+      ```cmd
+      # Redirect www.<domain_name> to <domain_name>
+      server {
+          listen 80;
+          server_name www.<domain_name>;
+      
+          return 301 http://<domain_name>$request_uri;
+      }
+      # Redirect any IP address requests to <domain_name>
+      server {
+          listen 80;
+          server_name <public_ip>;  
+      
+          return 301 http://<domain_name>$request_uri;
+      }
+      # Main server block for <domain_name>
+      server {
+          listen 80;
+          server_name <domain_name>;
+      
+          location / {
+              include proxy_params;
+              proxy_pass http://unix:/var/www/<project-name>/application.sock;
+          }
+      }
+      ```
+
+   * Enable config
+      ```cmd
+      sudo ln -s /etc/nginx/sites-available/<project-name>.conf /etc/nginx/sites-enabled/
+      ```
+
+   * Check config error
+      ```cmd
+      sudo nginx -t
+      ```
+
+   * Restart nginx
+      ```cmd
+      sudo systemctl restart nginx
+      ```
+
+10. Set firewall
+
+    * Enable firewall
+      ```cmd
+      sudo ufw enable
+      ```
+
+    * Allow port 80, 443 and 22(ssh)
+      ```cmd
+      sudo ufw allow "Nginx Full"
+      sudo ufw allow ssh
+      ```
+
+    * Check status
+      ```cmd
+      sudo ufw status
+      ```
+
+11. Project permission
+
+   ```cmd
+   sudo chmod 775 /var/www/<project-name>
+   ```
