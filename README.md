@@ -25,10 +25,12 @@ sudo apt update
    ```
 
 2. **Set server account**
+   
    2.1. Change root password
-         ```cmd
-         sudo passwd root
-         ```
+      ```cmd
+      sudo passwd root
+      ```
+   
    2.2. Add new user
       ```cmd
       sudo -i
@@ -87,7 +89,7 @@ sudo apt update
       exit
       ```
    
-3. **Set MySQL server** (If needed)
+4. **Set MySQL server** (If needed)
    Install and setup server
    ```cmd
    sudo apt-get install mysql-server
@@ -117,9 +119,9 @@ sudo apt update
    EXIT;
    ```
 
-4. **Set flask app**
+5. **Set flask app**
    4.1. Install app and other requirements
    4.2. Run with gunicorn + wsgi 
    
-5. **Set nginx config**
+6. **Set nginx config**
    5.1. Domain name
