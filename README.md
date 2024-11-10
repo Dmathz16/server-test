@@ -322,6 +322,6 @@ sudo apt update
 
 11. Project permission
 
-   ```cmd
-   sudo chmod 775 /var/www/<project-name>
-   ```
+      ```cmd
+      sudo chmod 775 /var/www/<project-name>
+      ```
