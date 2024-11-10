@@ -333,7 +333,35 @@ sudo apt update
       sudo ufw status
       ```
 
-10. Project permission
+10. Set SSL
+
+    * On your local machine, open terminal to send ssl cert files using scp
+      ```cmd
+      scp -i <path_to_pem_file> <path_to_ssl_cert_file> ubuntu@<ipaddress>:/var/www
+      ```
+
+      ```cmd
+      sudo apt install openssl
+
+      sudo mkdir -p /etc/ssl/certs/<domain_name>
+
+      # generate key
+      openssl genpkey -algorithm RSA -out <ssl_path>/dmathz.com.key
+
+      # generate csr
+      openssl req -new -key <ssl_path>/dmathz.com.key -out <ssl_path>/dmathz.com.csr
+      
+
+      sudo mv <path_to_ssl_file> /etc/ssl/certs/<domain_name>/
+
+      sudo chmod 600 /etc/ssl/certs/<domain_name>/*
+
+      sudo nginx -t
+      sudo systemctl reload nginx
+      ```
+
+
+12. Project permission
 
       ```cmd
       sudo chmod 775 /var/www/<project-name>
