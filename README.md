@@ -176,7 +176,7 @@ sudo apt update
       
 6. **Run with gunicorn + wsgi**
    
-   Stop running app by pressing **ctrl + c**
+      Stop running app by pressing **ctrl + c**
 
    * Install gunicorn
       ```cmd
