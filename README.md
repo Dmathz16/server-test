@@ -403,6 +403,8 @@ sudo apt update
       openssl genpkey -algorithm RSA -out <ssl_path>/dmathz.com.key
       ```
 
+      **Including pass phrase increases security**
+
     * Generate CSR 
       ```cmd
       openssl req -new -key <ssl_path>/dmathz.com.key -out <ssl_path>/dmathz.com.csr
@@ -413,7 +415,7 @@ sudo apt update
       sudo nano <ssl_path>/dmathz.com.csr
       ```
       
-    **Copy the texts that is used to generate ssl from ssl providers (e.g. GoDaddy)**
+      **Copy the texts in .csr, it will be used to generate ssl from ssl providers (e.g. GoDaddy)**
 
     * After generating and downloading ssl certs, **in your computer**, send the certs one by one using SCP
       ```cmd
