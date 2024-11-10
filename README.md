@@ -26,12 +26,12 @@ sudo apt update
 
 2. **Set server account**
    
-   2.1. Change root password
-         ```cmd
-         sudo passwd root
-         ```
+   * Change root password
+      ```cmd
+      sudo passwd root
+      ```
    
-   2.2. Add new user
+   * Add new user
       ```cmd
       sudo -i
       ```
@@ -71,7 +71,7 @@ sudo apt update
       sudo chown -R <new-user>:<new-user> /home/<new-user>/.ssh
       ```
       
-   2.3. Remove default user named **ubuntu**
+   * Remove default user named **ubuntu**
       Show processes running under ubuntu
       ```cmd
       ps -u ubuntu
