@@ -299,6 +299,54 @@ sudo apt update
           }
       }
       ```
+      or if has ssl
+      ``` cmd
+      # Redirect www.<domain_name> to <domain_name>
+      server {
+          listen 80;
+          server_name www.<domain_name>;
+      
+          return 301 http://<domain_name>$request_uri;
+      }
+      
+      # Redirect any IP address requests to <domain_name>
+      server {
+          listen 80;
+          server_name 54.255.58.113;
+      
+          return 301 http://<domain_name>$request_uri;
+      }
+      
+      # Main block for domain (HTTP -> HTTPS redirection)
+      server {
+          listen 80;
+          server_name <domain_name>;
+      
+          # Redirect HTTP to HTTPS
+          return 301 https://$host$request_uri;
+      }
+      # Main server block for dmathz.com
+      server {
+      
+          listen 443 ssl;
+          server_name <domain_name>;
+      
+          # SSL Configuration
+          ssl_certificate /etc/ssl/certs/<domain_name>/<cert>.crt;
+          ssl_certificate_key /etc/ssl/certs/<domain_name>/<key>.key;
+          ssl_trusted_certificate /etc/ssl/certs/<domain_name>/<bundle>.crt;
+      
+          # SSL Settings
+          ssl_protocols TLSv1.2 TLSv1.3;
+          ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';
+          ssl_prefer_server_ciphers on;
+      
+          location / {
+              include proxy_params;
+              proxy_pass http://unix:/var/www/<project-name>/application.sock;
+          }
+      }
+      ```
 
    * Enable config
       ```cmd
@@ -315,7 +363,7 @@ sudo apt update
       sudo systemctl restart nginx
       ```
 
-9. Set firewall
+9. **Set firewall**
 
     * Enable firewall
       ```cmd
@@ -333,30 +381,62 @@ sudo apt update
       sudo ufw status
       ```
 
-10. Set SSL
+10. **Set SSL**
 
     * On your local machine, open terminal to send ssl cert files using scp
       ```cmd
       scp -i <path_to_pem_file> <path_to_ssl_cert_file> ubuntu@<ipaddress>:/var/www
       ```
 
+    * Install openssl to generate private key
       ```cmd
       sudo apt install openssl
-
+      ```
+   
+    * Create directory for certificate files
+      ```cmd
       sudo mkdir -p /etc/ssl/certs/<domain_name>
+      ```
 
-      # generate key
+    * Generate **private key** without pass phrase
+      ```cmd
       openssl genpkey -algorithm RSA -out <ssl_path>/dmathz.com.key
+      ```
 
-      # generate csr
+    * Generate CSR 
+      ```cmd
       openssl req -new -key <ssl_path>/dmathz.com.key -out <ssl_path>/dmathz.com.csr
+      ```
+
+    * Open csr
+      ```cmd
+      sudo nano <ssl_path>/dmathz.com.csr
+      ```
       
+    **Copy the texts that is used to generate ssl from ssl providers (e.g. GoDaddy)**
 
+    * After generating and downloading ssl certs, **in your computer**, send the certs one by one using SCP
+      ```cmd
+      scp -i <path_to_pem_file> <path_to_ssl_cert_file> ubuntu@<ipaddress>:/var/www
+      ```
+
+    * **In server**, move certs to directory
+      ```cmd
       sudo mv <path_to_ssl_file> /etc/ssl/certs/<domain_name>/
-
+      ```
+      
+    * Directory permission 
+      ```cmd
       sudo chmod 600 /etc/ssl/certs/<domain_name>/*
-
+      ```
+   
+    * Check changes 
+      ```cmd
       sudo nginx -t
+      ```
+   
+    * Reload nginx so that changes takes effect
+      ```cmd
       sudo systemctl reload nginx
       ```
 
