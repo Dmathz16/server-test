@@ -217,7 +217,7 @@ sudo apt update
     
    * After deactivating python environment, create new service file
       ```cmd
-      sudo nano /etc/systmd/system/<project-name>.service
+      sudo nano /etc/systemd/system/<project-name>.service
       ```
 
    * Paste, update code then save this in service file
