@@ -123,6 +123,13 @@ sudo apt update
       SHOW DATABASES;
       EXIT;
       ```
+
+      ```cmd
+      CREATE USER '<username>'@'localhost' IDENTIFIED BY '<password>';
+      GRANT ALL PRIVILEGES ON <db_name>.* TO '<username>'@'localhost';
+      FLUSH PRIVILEGES;
+      EXIT;
+      ```
    
    * Import existing sql
       ```cmd
@@ -391,14 +398,14 @@ sudo apt update
 
     * Generate **private key** without pass phrase
       ```cmd
-      openssl genpkey -algorithm RSA -out <ssl_path>/dmathz.com.key
+      sudo openssl genpkey -algorithm RSA -out <ssl_path>/dmathz.com.key
       ```
 
       **Including pass phrase increases security**
 
     * Generate CSR 
       ```cmd
-      openssl req -new -key <ssl_path>/dmathz.com.key -out <ssl_path>/dmathz.com.csr
+      sudo openssl req -new -key <ssl_path>/dmathz.com.key -out <ssl_path>/dmathz.com.csr
       ```
 
     * Open csr
