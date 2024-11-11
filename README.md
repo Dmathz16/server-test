@@ -365,19 +365,10 @@ sudo apt update
 
 9. **Set firewall**
 
-    * Enable firewall
       ```cmd
-      sudo ufw enable
-      ```
-
-    * Allow port 80, 443 and 22(ssh)
-      ```cmd
-      sudo ufw allow "Nginx Full"
       sudo ufw allow ssh
-      ```
-
-    * Check status
-      ```cmd
+      sudo ufw allow 'Nginx Full'
+      sudo ufw enable
       sudo ufw status
       ```
 
