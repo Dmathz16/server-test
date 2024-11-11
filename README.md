@@ -316,12 +316,46 @@ sudo apt update
           return 301 http://<domain_name>$request_uri;
       }
       
+      server {
+          listen 443 ssl;
+          server_name www.<domain_name>;
+      
+          # SSL Configuration
+          ssl_certificate /etc/ssl/certs/<domain_name>/<cert>.crt;
+          ssl_certificate_key /etc/ssl/certs/<domain_name>/<key>.key;
+          ssl_trusted_certificate /etc/ssl/certs/<domain_name>/<bundle>.crt;
+      
+          # SSL Settings
+          ssl_protocols TLSv1.2 TLSv1.3;
+          ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';
+          ssl_prefer_server_ciphers on;
+      
+          return 301 https://<domain_name>$request_uri;
+      }
+      
       # Redirect any IP address requests to <domain_name>
       server {
           listen 80;
-          server_name 54.255.58.113;
+          server_name 54.255.58.113;  # Replace with your actual IP address
       
           return 301 http://<domain_name>$request_uri;
+      }
+      
+      server {
+          listen 443 ssl;
+          server_name 54.255.58.113;  # Replace with your actual IP address
+      
+          # SSL Configuration
+          ssl_certificate /etc/ssl/certs/<domain_name>/<cert>.crt;
+          ssl_certificate_key /etc/ssl/certs/<domain_name>/<key>.key;
+          ssl_trusted_certificate /etc/ssl/certs/<domain_name>/<bundle>.crt;
+      
+          # SSL Settings
+          ssl_protocols TLSv1.2 TLSv1.3;
+          ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';
+          ssl_prefer_server_ciphers on;
+      
+          return 301 https://<domain_name>$request_uri;
       }
       
       # Main block for domain (HTTP -> HTTPS redirection)
@@ -332,9 +366,9 @@ sudo apt update
           # Redirect HTTP to HTTPS
           return 301 https://$host$request_uri;
       }
-      # Main server block for dmathz.com
-      server {
       
+      # Main server block for <domain_name>
+      server {
           listen 443 ssl;
           server_name <domain_name>;
       
