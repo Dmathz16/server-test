@@ -107,7 +107,7 @@ sudo apt update
 4. **Set MySQL server** (If needed)
    * Install and setup server
       ```cmd
-      sudo apt-get install mysql-server
+      sudo apt-get install mysql-server -y
       sudo mysql_secure_installation
       sudo systemctl status mysql
       ```
