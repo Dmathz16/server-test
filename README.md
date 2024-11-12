@@ -238,7 +238,7 @@ sudo apt update
       Group=www-data
       WorkingDirectory=/var/www/<project-name>
       Environment="PATH=/var/www/<project-name>/.venv/bin"
-      ExecStart=/var/www/<project-name>/.venv/bin/gunicorn --workers 3 --bind unix:application.sock -m 007 wsgi:app
+      ExecStart=/var/www/<project-name>/.venv/bin/gunicorn --workers 2 --timeout 20 --bind unix:application.sock -m 007 wsgi:app
       
       # Log output configuration
       StandardOutput=append:/var/log/<project-name>/gunicorn_access.log
