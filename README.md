@@ -145,6 +145,24 @@ sudo apt update
       EXIT;
       ```
 
+   * Open mysql config file
+     ``` cmd
+     sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+     ```
+
+   * Open mysql config file
+     ``` cmd
+     [mysqld]
+     thread_cache_size = 4
+     max_connections = 10
+     innodb_thread_concurrency = 4
+     innodb_read_io_threads = 2
+     innodb_write_io_threads = 2
+     wait_timeout = 300
+     interactive_timeout = 300
+     innodb_buffer_pool_size = 128M
+     ```
+
 
 5. **Set flask app**
 
