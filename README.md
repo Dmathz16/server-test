@@ -154,7 +154,6 @@ sudo apt update
      ``` cmd
      [mysqld]
      thread_cache_size = 4
-     max_connections = 10
      innodb_thread_concurrency = 4
      innodb_read_io_threads = 2
      innodb_write_io_threads = 2
@@ -162,6 +161,12 @@ sudo apt update
      interactive_timeout = 300
      innodb_buffer_pool_size = 128M
      event_scheduler = OFF
+
+     key_buffer              = 8M 
+     max_connections         = 10 # Limit connections
+     query_cache_size        = 8M # try 4m if not enough 
+     query_cache_limit       = 512K
+     thread_stack            = 128K
 
      performance_schema = 0
      ```
