@@ -161,6 +161,7 @@ sudo apt update
      wait_timeout = 300
      interactive_timeout = 300
      innodb_buffer_pool_size = 128M
+     event_scheduler = OFF
      ```
 
 
