@@ -513,7 +513,7 @@ sudo apt update
       ```
 
 
-11. Backup MySQL with AWS S3 and on your machine
+11. **Backup MySQL with AWS S3 and on your machine**
 
     * Create directories to store mysql dumps
       ```cmd
