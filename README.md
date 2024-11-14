@@ -130,6 +130,11 @@ sudo apt update
       FLUSH PRIVILEGES;
       EXIT;
       ```
+
+   * For dump (if needed)
+      ```cmd
+      GRANT PROCESS ON *.* TO 'rogin'@'localhost';
+      ```
    
    * Import existing sql
       ```cmd
@@ -170,6 +175,13 @@ sudo apt update
 
      performance_schema = 0
      ```
+     
+   * Dump mysql
+     ``` cmd
+     sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+     ```
+   
+     
 
 
 5. **Set flask app**
