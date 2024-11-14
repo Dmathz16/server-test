@@ -644,7 +644,7 @@ sudo apt update
       ```
       
 
-13. Project permission
+13. **Project permission**
 
       ```cmd
       sudo chmod 775 /var/www/<project-name>
