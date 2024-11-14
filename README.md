@@ -131,9 +131,11 @@ sudo apt update
       EXIT;
       ```
 
-   * For dump (if needed)
+   * For dump privilege (if needed)
       ```cmd
       GRANT PROCESS ON *.* TO 'rogin'@'localhost';
+      FLUSH PRIVILEGES;
+      EXIT;
       ```
    
    * Import existing sql
@@ -180,8 +182,6 @@ sudo apt update
      ``` cmd
      sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
      ```
-   
-     
 
 
 5. **Set flask app**
@@ -513,7 +513,138 @@ sudo apt update
       ```
 
 
-12. Project permission
+11. Backup MySQL with AWS S3 and on your machine
+
+    * Create directories to store mysql dumps
+      ```cmd
+      sudo mkdir /var/backups/mysql 
+      sudo mkdir /var/backups/mysql/minutely/
+      sudo mkdir /var/backups/mysql/hourly/
+      sudo mkdir /var/backups/mysql/daily/
+      sudo mkdir /var/backups/mysql/weekly/
+      sudo mkdir /var/backups/mysql/monthly/
+      ```
+
+    * Allow user as owner to that dirs
+      ```cmd
+      sudo chown <username>:<username> /var/backups/mysql
+      sudo chown <username>:<username> /var/backups/mysql/minutely/
+      sudo chown <username>:<username> /var/backups/mysql/hourly/
+      sudo chown <username>:<username> /var/backups/mysql/daily/
+      sudo chown <username>:<username> /var/backups/mysql/weekly/
+      sudo chown <username>:<username> /var/backups/mysql/monthly/
+      ```
+      
+    * Install AWS CLI
+      ```cmd
+      sudo apt install curl unzip
+      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      unzip awscliv2.zip
+      sudo ./aws/install
+      aws --version
+      ```
+
+    * Setup S3 Bucket configurations
+      ```cmd
+      aws configure
+      ```
+      Go to AWS **S3** and **IAM** to get **credentials**
+
+    * Check if S3 Bucket is available
+      ```cmd
+      aws s3 ls s3://<bucket_name>
+      ```
+
+    * Create directory for software **Cronjobs** (if didn't exist)
+      ```cmd
+      sudo mkdir -p /usr/local/bin/cronjob-scripts/
+      ```
+
+    * Create shell file inside cronjob directory
+      ```cmd
+      sudo nano /usr/local/bin/cronjob-scripts/backup_mysql_minutely.sh
+      ```
+
+    * Create shell file inside cronjob directory
+      ```cmd
+      #!/bin/bash
+
+      # MySQL credentials
+      USER="<username>"
+      PASSWORD="<password>"
+      DATABASE="<db_name>"
+      
+      # Backup directory (ensure this exists or create it)
+      BACKUP_DIR="/var/backups/mysql/minutely"
+      if [ ! -d "$BACKUP_DIR" ]; then
+          echo "Backup directory does not exist. Creating it..."
+          mkdir -p "$BACKUP_DIR"
+      fi
+      
+      # S3 Bucket details
+      S3_BUCKET="<bucket_name>"
+      S3_PATH="<path_inside_bucket>"
+      
+      # Retention policy (number of days to keep backups)
+      RETENTION_DAYS=7
+      
+      # Get current date for backup filename
+      DATE=$(date +%Y%m%d_%H%M%S)
+      
+      # Create backup file
+      BACKUP_FILE="$BACKUP_DIR/$DATABASE-$DATE.sql.gz"
+      
+      # Perform the backup using mysqldump
+      mysqldump -u$USER -p$PASSWORD $DATABASE | gzip > $BACKUP_FILE
+      
+      # Check if the backup was successful
+      if [ $? -eq 0 ]; then
+          echo "Backup of $DATABASE completed successfully: $BACKUP_FILE"
+      else
+          echo "Backup of $DATABASE failed."
+          exit 1  # Exit if backup fails
+      fi
+      
+      # Upload to S3
+      aws s3 cp "$BACKUP_FILE" s3://$S3_BUCKET/$S3_PATH/$(basename $BACKUP_FILE)
+      
+      # Check if the S3 upload was successful
+      if [ $? -eq 0 ]; then
+          echo "Backup uploaded to S3 successfully: s3://$S3_BUCKET/$S3_PATH/$(basename $BACKUP_FILE)"
+      else
+          echo "Failed to upload backup to S3."
+          exit 1  # Exit if S3 upload fails
+      fi
+      
+      # Cleanup: Remove backups older than RETENTION_DAYS
+      find $BACKUP_DIR -type f -name "$DATABASE-*.sql.gz" -mtime +$RETENTION_DAYS -exec rm -f {} \;
+      
+      # Check if any old backups were deleted
+      if [ $? -eq 0 ]; then
+          echo "Old backups older than $RETENTION_DAYS days have been deleted."
+      else
+          echo "No backups were deleted (check if any are older than $RETENTION_DAYS days)."
+      fi
+      ```
+
+    * Set .sh file owner and mode
+      ```cmd
+      sudo chown <username>:<username> <path_to_cronjob_sh_file>
+      sudo chmod 700 <path_to_cronjob_sh_file>
+      ```
+
+    * Open **Cronjob Editon**
+      ```cmd
+      crontab -e
+      ```
+
+    * Add this line to the editon then save 
+      ```cmd
+      0 * * * * /usr/local/bin/cronjob-scripts/backup_mysql_minutely.sh
+      ```
+      
+
+13. Project permission
 
       ```cmd
       sudo chmod 775 /var/www/<project-name>
