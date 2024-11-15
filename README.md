@@ -131,6 +131,13 @@ sudo apt update
       EXIT;
       ```
 
+    * For remote connection
+      ```cmd
+      RENAME USER '<existing_username>'@'localhost' TO '<existing_username>'@'%';
+      FLUSH PRIVILEGES;
+      EXIT;
+      ```
+
    * For dump privilege (if needed)
       ```cmd
       GRANT PROCESS ON *.* TO 'rogin'@'localhost';
