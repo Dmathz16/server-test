@@ -123,7 +123,8 @@ sudo apt update
       SHOW DATABASES;
       EXIT;
       ```
-
+  
+      For local connection
       ```cmd
       CREATE USER '<username>'@'localhost' IDENTIFIED BY '<password>';
       GRANT ALL PRIVILEGES ON <db_name>.* TO '<username>'@'localhost';
@@ -133,7 +134,7 @@ sudo apt update
 
     * For remote connection
       ```cmd
-      RENAME USER '<existing_username>'@'localhost' TO '<existing_username>'@'%';
+      CREATE USER '<username>'@'%' IDENTIFIED WITH mysql_native_password BY '<password>';
       FLUSH PRIVILEGES;
       EXIT;
       ```
