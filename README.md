@@ -447,6 +447,7 @@ sudo apt update
       ```cmd
       sudo ufw allow ssh
       sudo ufw allow 'Nginx Full'
+      sudo ufw allow 3306/tcp
       sudo ufw enable
       sudo ufw status
       ```
