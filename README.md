@@ -139,6 +139,11 @@ sudo apt update
       EXIT;
       ```
 
+       ```cmd
+      sudo apt install net-tools
+      sudo netstat -lnptu
+      ```
+
    * For dump privilege (if needed)
       ```cmd
       GRANT PROCESS ON *.* TO 'rogin'@'localhost';
