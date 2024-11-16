@@ -656,6 +656,36 @@ sudo apt update
       ```cmd
       0 * * * * /usr/local/bin/cronjob-scripts/backup_mysql_minutely.sh
       ```
+
+
+14. **Setup AWS CLI script**
+    
+      ```cmd
+      sudo nano ~/.aws/lifecycle-policy.json
+      ```
+      ```cmd
+      {
+        "Rules": [
+          {
+            "ID": "Delete files after 1 day in /backup/mysql/hourly",
+            "Status": "Enabled",
+            "Filter": {
+              "Prefix": "backup/mysql/hourly/"
+            },
+            "Expiration": {
+              "Days": 1
+            }
+          }
+        ]
+      }
+      ```
+      ```cmd
+      aws s3api put-bucket-lifecycle-configuration --bucket <bucket_name> --lifecycle-configuration file://lifecycle-policy.json
+      ```
+      ```cmd
+      aws s3api get-bucket-lifecycle-configuration --bucket <bucket_name>
+      ```
+
       
 
 13. **Project permission**
