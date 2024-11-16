@@ -631,7 +631,7 @@ sudo apt update
       fi
       
       # Cleanup: Remove backups older than RETENTION_DAYS
-      find $BACKUP_DIR -type f -name "$DATABASE-*.sql.gz" -mtime +$RETENTION_DAYS -exec rm -f {} \;
+      find $BACKUP_DIR -type f -name "$DATABASE-*.sql.gz" -mtime $RETENTION_DAYS -exec rm -f {} \;
       
       # Check if any old backups were deleted
       if [ $? -eq 0 ]; then
