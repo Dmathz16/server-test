@@ -643,8 +643,8 @@ sudo apt update
 
     * Set .sh file owner and mode
       ```cmd
-      sudo chown <username>:<username> <path_to_cronjob_sh_file>
-      sudo chmod 700 <path_to_cronjob_sh_file>
+      sudo chown -R <username>:<username> <path_to_cronjob_sh_file>
+      sudo chmod -R u+rwx <path_to_cronjob_sh_file>
       ```
 
     * Open **Cronjob Editon**
