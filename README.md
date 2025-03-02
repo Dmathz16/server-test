@@ -686,11 +686,10 @@ sudo apt update
       aws s3api get-bucket-lifecycle-configuration --bucket <bucket_name>
       ```
 
-## Aheeem
-      
-
 13. **Project permission**
 
       ```cmd
       sudo chmod 775 /var/www/<project-name>
       ```
+
+## Aheeem
