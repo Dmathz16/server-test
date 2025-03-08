@@ -322,6 +322,11 @@ sudo apt update
       sudo tail -f /var/log/<project-name>/gunicorn_error.log
       ```
 
+   * Check Nginx access logs
+     ```cmd
+     sudo tail -f /var/log/nginx/access.log
+     ```
+
 
 8. **Set nginc config** (with Domain name)
 
