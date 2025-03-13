@@ -697,4 +697,20 @@ sudo apt update
       sudo chmod 775 /var/www/<project-name>
       ```
 
-## Aheeem
+**Additionals**
+
+* MySQL Upload data using csv
+   ```cmd
+   SET GLOBAL local_infile = 1;
+   SHOW VARIABLES LIKE 'local_infile';
+   
+   USE <DATABASE_NAME>;
+   
+   LOAD DATA LOCAL INFILE '<PATH_TO_CSV_FILE>'
+   INTO TABLE <TABLE_NAME>
+   FIELDS TERMINATED BY ',' 
+   ENCLOSED BY '"'
+   LINES TERMINATED BY '\n'
+   IGNORE 1 ROWS
+   (<TABLE_FIELD_1>, <TABLE_FIELD_2>, <TABLE_FIELD_3>);
+   ```
