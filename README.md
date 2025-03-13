@@ -700,17 +700,34 @@ sudo apt update
 **Additionals**
 
 * MySQL Upload data using csv
-   ```cmd
-   SET GLOBAL local_infile = 1;
-   SHOW VARIABLES LIKE 'local_infile';
-   
-   USE <DATABASE_NAME>;
-   
-   LOAD DATA LOCAL INFILE '<PATH_TO_CSV_FILE>'
-   INTO TABLE <TABLE_NAME>
-   FIELDS TERMINATED BY ',' 
-   ENCLOSED BY '"'
-   LINES TERMINATED BY '\n'
-   IGNORE 1 ROWS
-   (<TABLE_FIELD_1>, <TABLE_FIELD_2>, <TABLE_FIELD_3>);
-   ```
+   * Transfer CSV to server
+      ```cmd
+      scp -i <PATH_TO_PEM_FILE> <PATH_TO_THE_CSV_FILE> <USER>@<EC2_PUBLIC_IP>:/var/www/
+      ```
+   * SSH to server
+      ```cmd
+      ssh -i <PATH_TO_PEM_FILE> <USER>@<EC2_PUBLIC_IP>
+      ```
+   * Transfer CSV to MySQL storage
+      ```cmd
+      sudo mv /var/www/<CSV_FILENAME> /var/lib/mysql-files/
+      ```
+   * Login to MySQL
+      ```cmd
+      mysql -u root -p
+      ```
+   * dwadwa
+      ```cmd
+      SET GLOBAL local_infile = 1;
+      SHOW VARIABLES LIKE 'local_infile';
+      
+      USE <DATABASE_NAME>;
+      
+      LOAD DATA LOCAL INFILE '<PATH_TO_CSV_FILE>'
+      INTO TABLE <TABLE_NAME>
+      FIELDS TERMINATED BY ',' 
+      ENCLOSED BY '"'
+      LINES TERMINATED BY '\n'
+      IGNORE 1 ROWS
+      (<TABLE_FIELD_1>, <TABLE_FIELD_2>, <TABLE_FIELD_3>);
+      ```
