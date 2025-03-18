@@ -714,7 +714,7 @@ sudo apt update
       ```
    * Login to MySQL
       ```cmd
-      mysql -u root -p
+      mysql --local-infile=1 -u root -p
       ```
    * dwadwa
       ```cmd
